@@ -1,6 +1,6 @@
 ---
 title: "Lab 3 Report"
-author: "___"
+author: "Dontae Jonson"
 date: "`r format(Sys.Date())`"
 output: github_document
 ---
@@ -10,20 +10,43 @@ Instructions for this lab report can be found on [Your assignment section of Lab
 ## Fireflies
 
 > A. Insert an R code chunk and create a graph depicting the frequency distribution of the 35 mass measurements. It should have legible text and appropriate axis labels.
+```{r}
+# Loading packages  --------------------------------------------------------------
 
-\_\_\_
+library(tidyverse)
+
+# Reading Data ----------------------------------------------------------
+
+fire_data <- read_csv("https://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter02/chap02q19FireflySpermatophoreMass.csv")
+fire_data #making sure data was loaded correctly 
+
+# First plot --------------------------------------------------------------
+
+ggplot(data=fire_data) # Make a blank graph
+ggplot(data = fire_data) + # Histogram addition
+  geom_histogram(mapping = aes(x = spermatophoreMass))
+
+
+# Cleaning up the graph ----------------------------------------------------
+
+ggplot(data = fire_data) +
+  geom_histogram(mapping = aes(x = spermatophoreMass), binwidth = 0.02) +
+  labs(x = "spermatophoreMass", y = "Count (Number of Males)")
+```
+
+
 
 > B. What type of graph did you choose in part (A)? Why?
 
-\_\_\_
+Histogram. I chose this because there was only one numerical variable. 
 
 > C. Describe the shape of the frequency distribution. What are its main features?
 
-\_\_\_
+Right skewed. And location is 
 
 > D. What term would be used to describe the largest measurement in the frequency distribution? You can refer to the lecture slides, your notes, or the textbook.
 
-\_\_\_
+Outlier
 
 ## Bird orders
 
@@ -37,26 +60,39 @@ birds <- ebird_taxonomy %>%           # start with the ebird_taxonomy data
 ```
 
 > E. How many bird species are in the new birds dataset? How did you find out?
-
-\_\_\_
+10,721
 
 > H. How many orders are there? You can get this right by counting on the graph, but you will only get full points if you use some code to figure it out.
 
-\_\_\_
+41
 
 > F. Insert an R code chunk and create a graph depicting the distribution of orders in the birds dataset. Sort the orders with the most frequent on the left. It should have legible text and appropriate axis labels.
 
-\_\_\_
+```{r}
+ggplot(data=birds)
+ggplot(data=birds)+
+  geom_bar(mapping = aes(x =order))#had to put this hear didnt know how to put it in its own code chunk
+
+ggplot(data=birds)+
+geom_bar(mapping = aes(x = fct_infreq(order)))+
+  labs(x="order") +
+  theme_classic(base_size = 7) +
+  theme(
+    axis.title = element_text(face = "bold"),
+    axis.text = element_text(color = "blue", size = rel(1)),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.ticks.x = element_blank()
+  )
+```
+
 
 > G. What kind of graph did you create? Why?
 
-\_\_\_
+I created a bar chart. I did this because it was counting the individual frequencies of categorical events.
 
 ## Links to peer review
 
-I reviewed \_\_\_'s lab report at this URL: \_\_\_
-
-\_\_\_ reviewed my lab report at this URL: \_\_\_
+I didnt review any lab reports as this assignment was turned in late 
 
 ## Session Info
 
@@ -65,3 +101,4 @@ Here is my session information:
 ```{r}
 sessioninfo::session_info()
 ```
+
